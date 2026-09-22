@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#BFE3F5">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Manual">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>Manual</title>
+  <script src="./ocr/tesseract.min.js" defer></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <section id="homeView" class="view" aria-labelledby="homeTitle">
+      <header class="topbar">
+        <div><p class="eyebrow">내 손안의 설명서</p><h1 id="homeTitle">Manual</h1></div>
+        <button id="addButton" class="round-button" type="button" aria-label="설명서 추가">+</button>
+      </header>
+      <label class="search-wrap" for="searchInput"><span class="search-icon" aria-hidden="true"></span><input id="searchInput" type="search" placeholder="제품 이름이나 설명으로 찾아보세요" autocomplete="off"></label>
+      <p id="resultCount" class="result-count" aria-live="polite"></p>
+      <div id="manualList" class="manual-list"></div>
+      <div id="emptyState" class="empty-state" hidden><div class="receipt-art" aria-hidden="true"><i></i><i></i><i></i></div><h2>종이 설명서를 담아보세요</h2><p>사진을 찍으면 글자를 읽어<br>찾기 쉽게 정리해 드려요.</p><button id="emptyAddButton" type="button" class="primary-button">첫 설명서 추가하기</button></div>
+      <div id="noResults" class="empty-state compact" hidden><h2>찾는 설명서가 없어요</h2><p>다른 검색어로 찾아보세요.</p></div>
+    </section>
+
+    <section id="detailView" class="view detail-view" hidden aria-labelledby="detailHeading">
+      <header class="detail-topbar"><button id="backButton" class="icon-button" type="button" aria-label="목록으로 돌아가기">‹</button><h1 id="detailHeading">설명서</h1><button id="deleteButton" class="text-button danger" type="button">삭제</button></header>
+      <div class="detail-content">
+        <img id="detailPhoto" class="detail-photo" alt="저장된 설명서 사진">
+        <label class="field-label" for="titleInput">제목</label><input id="titleInput" class="title-input" type="text" maxlength="100" autocomplete="off">
+        <div class="text-label-row"><label class="field-label" for="textInput">인식된 글</label><span id="saveStatus" aria-live="polite"></span></div>
+        <textarea id="textInput" class="ocr-text" rows="14" placeholder="인식된 글이 여기에 표시돼요. 직접 고쳐도 괜찮아요."></textarea>
+      </div>
+    </section>
+  </main>
+  <input id="photoInput" class="visually-hidden" type="file" accept="image/*" capture="environment">
+  <div id="busyOverlay" class="busy-overlay" hidden><div class="spinner"></div><p>사진을 정리하고 있어요...</p></div>
+  <div id="deleteSheet" class="sheet-backdrop" hidden><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="deleteTitle"><div class="sheet-handle"></div><h2 id="deleteTitle">이 설명서를 삭제할까요?</h2><p>사진과 인식된 글이 이 휴대폰에서 지워져요.</p><button id="deleteConfirm" class="delete-confirm" type="button">한 번 더 눌러 삭제</button><button id="deleteCancel" class="secondary-button" type="button">취소</button></section></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
